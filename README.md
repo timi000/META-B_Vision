@@ -40,12 +40,12 @@ Link:  https://www.latlong.net/category/provinces-40-60.html
 
 ### App Architecture 
 
-TBD.
+<img src = "images/app.PNG" >
 
 ### Screenshots 
 
-![Test Image 1](covidcasesvisual.png)
-![Test Image 2](googletrends.png)
+<img src = "images/googletrends.PNG" >
+<img src = "images/covidcasesvisual.PNG" >
 
 ### Github Link
 
