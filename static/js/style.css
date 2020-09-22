@@ -1,9 +1,13 @@
 .nav{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: Verdana, 'Geneva', Tahoma, sans-serif;
     text-decoration-color: cornflowerblue;
     background-color: azure,
     
 
+}
+h1{
+    padding-top: 50px;
+    padding-left: 50px;
 }
 h4{
     text-size-adjust: 14px;
