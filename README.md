@@ -40,7 +40,7 @@ Link:  https://www.latlong.net/category/provinces-40-60.html
 
 ### App Architecture 
 
-<img src = "images/app.PNG" >
+<img src = "images/app_update.JPG" >
 
 ### Screenshots 
 
