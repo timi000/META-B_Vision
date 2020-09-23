@@ -46,7 +46,7 @@ def trend():
     session.close()
 
     trd_list=[]
-    for date, Mask, Zoom, Bike, CERB, Patio, numconf, numtestedtoday, numtoday, numactive, numdeathstoday in Result: 
+    for date, Mask, Zoom, CERB, Patio, Bike, numconf, numtestedtoday, numtoday , numdeathstoday , numactive in Result: 
         start_dict={}
         start_dict["date"]=date
         start_dict["Mask"]=Mask
@@ -77,7 +77,7 @@ def corona():
 
    
     cvd_list=[]
-    for date, prname, latitude,longitude, population, numrecover, numrecoveredtoday,numconf, numtestedtoday, numtoday, numactive, numdeathstoday in Result: 
+    for date, prname, latitude,longitude, population, numrecover, numrecoveredtoday,numconf, numtestedtoday, numtoday, numdeathstoday, numactive  in Result: 
         covid_dict={}
         covid_dict["date"]=date
         covid_dict["province_name"]=prname
