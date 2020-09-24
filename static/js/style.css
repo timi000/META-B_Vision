@@ -16,8 +16,19 @@ body{
     background-color: white;
     text-decoration-color: blue;
 }
+p{
+   padding-top: 20px;
+   padding-left: 55px;
+   padding-right: 50px; 
+}
 footer{
     position: absolute;
     left: 40%;
     top:99%
+}
+.table{
+    position: absolute;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 30px;
 }
