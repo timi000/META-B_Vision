@@ -35,6 +35,10 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/trends")
+def trends():
+    return render_template("trends.html")
     
 @app.route("/api/v1.0/covid_trends")
 def trend():
