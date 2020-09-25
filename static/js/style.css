@@ -9,8 +9,15 @@ h1{
     padding-top: 50px;
     padding-left: 50px;
 }
+h3{
+    text-size-adjust: 14px;
+}
+
 h4{
     text-size-adjust: 14px;
+    position: absolute;
+    left: 40%;
+    top:10%
 }
 body{
     background-color: white;
@@ -31,4 +38,27 @@ footer{
     padding-right: 50px;
     padding-left: 50px;
     padding-top: 30px;
+}
+.mainpage{
+    background-image: url(https://www.rehabmagazine.ca/wp-content/uploads/coronavirus-3992933.jpg) ;
+    background-position-y: 160px;
+    background-size: cover;
+    background-repeat: repeat;
+    width: 1500px ;
+    height: 1000px;
+    
+}
+.main-text{
+    -webkit-text-stroke: 1px black;
+   color: black;
+   text-shadow:
+       3px 3px 0 white,
+     -1px -1px 0 white,  
+      1px -1px 0 white,
+      -1px 1px 0 white,
+       
+};
+footer{
+    color: rgb(66, 175, 66);
+    width: 100px;
 }
