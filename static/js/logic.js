@@ -61,15 +61,20 @@ d3.json(link, function(data) {
 
 //Total Recovered Marker on each province and territory 
 
-var link2 = "/api/v1.0/canada_covid";
 
-// d3.json(link2, function(response) {
 
-//   var markers = L.markerClusterGroup();
+
+// Markers 
+
+// var markers = L.markerClusterGroup();
 
 
 //   Set the data location property to a variable
-//   var location = [response[i].latitude, response[i].longitude];
+// var filteredData = data.filter(function (d) {
+//   return d.province_name != "Canada" && d.province_name != "Repatriated travellers";
+// });
+
+// var filteredDate = [filteredData[i].latitude, filteredData[i].longitude];
 
 //   Check for location property
 //   if (location) {
