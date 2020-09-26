@@ -2,65 +2,144 @@
 // Incoming data is internally referred to as incomingData
 
 
-d3.json("/api/v1.0/canada_covid").then(function(data){
-   for (var i = 0; i < data.length; i++){
-     console.log(data[i].latitude, data[i].longitude)
-   }
-  })
+d3.json("/api/v1.0/canada_covid").then(function (data) {
+  console.log(data)
+})
 
 
 d3.json("/api/v1.0/covid_trends").then(function (data) {
+  console.log(data)
 
-  var bikeArray = [];
-  var cerbArray = [];
-  var maskArray = [];
-  var patioArray = [];
-  var zoomArray = [];
-  var dailyCasesArray = [];
-  var dateArray = [];
+  /*dateArray=data.map(d=>d.date)
+  scatterData = []
+  data.forEach(function(d){
+    
+    scatterDict={}
+    scatterDict["x"]=d.active_cases
+    scatterDict["y"]=d[optionvalue]
+    scatterData.push(scatterDict)
+  })*/
+  var nline;
+  var trendList = ["Bike", "CERB", "Zoom", "Patio", "Mask"];
+  //console.log(trendList)
+  // Appending list into a dropdown
+  var selectTrend = d3.select("#selTrend")
+  trendList.forEach(tag => {
 
-  for (var i = 0; i < data.length; i++) {
+    selectTrend.append("option").attr("value", tag).text(tag)
+  })
 
-    bikeArray.push(data[i].Bike);
-    cerbArray.push(data[i].CERB);
-    maskArray.push(data[i].Mask);
-    patioArray.push(data[i].Patio);
-    zoomArray.push(data[i].Zoom);
-    dailyCasesArray.push(data[i].daily_cases);
-    dateArray.push(data[i].date);
-  }
+  var covList = ["confirmed cases", "daily_tests", "daily_cases", "active_cases", "daily_deaths"];
+  //console.log(covList)
+  // Appending list into a dropdown
+  var selectCov = d3.select("#selCovid")
+  covList.forEach(tag => {
 
-  //console.log(bikeArray);
-  //console.log(dateArray);
+    selectCov.append("option").attr("value", tag).text(tag)
+  })
 
-  var trace1 = {
-    x: dateArray,
-    y: dailyCasesArray,
-    name: 'Daily Cases',
-    type: 'scatter'
-  };
+  var opt1 = "Mask"
+  var opt2 = "daily_tests"
 
-  var trace2 = {
-    x: dateArray,
-    y: bikeArray,
-    name: '"Bike" Google Search',
-    yaxis: 'y2',
-    type: 'scatter'
-  };
 
-  var data = [trace1, trace2];
+  var canvas = document.getElementById('myChart');
+  var lineData = {
+    type: 'line',
+    data: {
+      labels: data.map(d => d.date),
+      datasets: [{
+        label: opt1,
+        yAxisID: "A",
+        backgroundColor: "rgba(255,221,50,0.2)",
+        borderColor: "rgba(255,221,50,1)",
+        data: data.map(d => d[opt1])
 
-  var layout = {
-    title: 'Google Search Trends',
-    yaxis: { title: 'Daily Cases' },
-    yaxis2: {
-      title: 'Bike Search',
-      titlefont: { color: 'rgb(148, 103, 189)' },
-      tickfont: { color: 'rgb(148, 103, 189)' },
-      overlaying: 'y',
-      side: 'right'
+      }, {
+        label: opt2,
+        yAxisID: "B",
+        backgroundColor: "rgba(60,186,159,0.2)",
+        borderColor: "rgba(60,186,159,1)",
+        data: data.map(d => d[opt2])
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          id: "A",
+          type: 'linear',
+          position: 'left',
+        }, {
+          id: "B",
+          type: 'linear',
+          position: 'right',
+        }]
+      },
+      title:{
+        display: true,
+        text: "xxx"
+      }
+
     }
   };
 
-  Plotly.newPlot('trendsDiv', data, layout);
-});  
+  if (window.bar != undefined)
+    window.bar.destroy();
+  window.bar = new Chart(canvas, lineData);
+
+  function updateTrends() {
+
+    var y1Menu = d3.select("#selTrend");
+    var optiony1 = y1Menu.property("value");
+
+    var y2Menu = d3.select("#selCovid");
+    var optiony2 = y2Menu.property("value")
+
+    var opt1 = optiony1
+    var opt2 = optiony2
+
+    var canvas = document.getElementById('myChart').getContext("2d");
+
+    // var nline =new Chart(canvas, 
+    var lineData = {
+      type: 'line',
+      data: {
+        labels: data.map(d => d.date),
+        datasets: [{
+          label: opt1,
+          yAxisID: opt1,
+          backgroundColor: "rgba(255,221,50,0.2)",
+          borderColor: "rgba(255,221,50,1)",
+          data: data.map(d => d[opt1])
+        }, {
+          label: opt2,
+          yAxisID: opt2,
+          backgroundColor: "rgba(60,186,159,0.2)",
+          borderColor: "rgba(60,186,159,1)",
+          data: data.map(d => d[opt2])
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            id: opt1,
+            type: 'linear',
+            position: 'left',
+          }, {
+            id: opt2,
+            type: 'linear',
+            position: 'right',
+
+          }]
+        }
+      }
+    };
+    if (window.bar != undefined)
+      window.bar.destroy();
+    window.bar = new Chart(canvas, lineData);
+
+  }
+
+  document.getElementById("selTrend").addEventListener("change", updateTrends)
+  d3.select("#selCovid").on("change", updateTrends)
+
+})
