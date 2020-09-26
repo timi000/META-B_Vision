@@ -3,7 +3,7 @@ var map = L.map('map').setView([56.1304, -106.3468], 8);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapboxAccessToken, {
     id: 'light-v9',
-    attribution: ...,
+    attribution:"© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     tileSize: 512,
     zoomOffset: -1
 }).addTo(map);
@@ -29,22 +29,4 @@ function style(feature) {
         dashArray: '3',
         fillOpacity: 0.7
     };
-}
-
-L.geoJson(/*insert canada file here*/, {style: style}).addTo(map);
-
-function highlightFeature(e) {
-    var layer = e.target;
-
-    layer.setStyle({
-        weight: 5,
-        color: '#666',
-        dashArray: '',
-        fillOpacity: 0.7
-        
-    });
-
-}
-function resetHighlight(e) {
-    geojson.resetStyle(e.target);
 }
