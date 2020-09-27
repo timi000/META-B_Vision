@@ -57,4 +57,56 @@ var myMap = L.map("map", {
   
       }
     }).addTo(myMap);
+
   });
+
+  d3.json("/api/v1.0/canada_covid", function(data){
+    //console.log(data)
+    var filteredData = data.filter(function (d) {
+      return d.province_name != "Canada" && d.province_name !=  "Repatriated travellers" && d.date=="18-09-2020";
+    });
+      var location =[];
+      filteredData.forEach(fdata=>{
+        fdata["Coordinate"]=[fdata.latitude, fdata.longitude]
+      // })
+    })
+   console.log(filteredData)
+
+  function markerSize(covid) {
+      return (covid + 750) * 100;
+
+  }
+
+  for (var i = 0; i <filteredData.length; i++) {
+      L.circle([filteredData[i].latitude, filteredData[i].longitude], {
+          fillOpacity: 0.75,
+          color: "blue",
+          fillColor: "white",
+          radius: markerSize(filteredData[i].active_cases)
+      }).bindPopup("<h2>" + filteredData[i].province_name + "</h2>" + "<br>" + "<h1>" + filteredData[i].active_cases + "</h1>" ).addTo(myMap);
+  }
+
+// var bc = L.marker([filteredData[0].latitude, filteredData[0].longitude]).bindPopup("This is ON");
+// var ab = L.marker([filteredData[4].latitude, filteredData[4].longitude]).bindPopup("This is ON");
+
+// var jurisdictions = L.layerGroup([bc, ab]);
+
+
+//     var baseMaps = {
+//     "Grayscale": grayscale,
+//      "Streets": streets
+//     };
+    
+//     var overlayMaps = {
+//     "Jurisdictions": jurisdictions
+//     };
+    
+//     var myMap = L.map("map", {
+//         center: [60.59, -99.3468],
+//         zoom: 3,
+//         layers: [grayscale, jurisdictions]
+//       });
+
+//     L.control.layers(baseMaps, overlayMaps).addTo(myMap);
+  })
+
