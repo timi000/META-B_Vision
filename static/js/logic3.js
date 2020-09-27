@@ -104,6 +104,33 @@ myMap.on('popupopen', function (e) {
   currentPopup = e.popup; // keep track of current popup
   // Do stuff with the popup or inspect it's marker here...
   console.log(currentPopup)
+
+  var selection = currentPopup._content
+  console.log(selection)
+  var splitselection = selection.split('<').join('>').split(":").join(">").split('>')
+  console.log(splitselection)
+  var provinceselected = splitselection[2];
+  var categoryselected = splitselection[8];
+  console.log(provinceselected);
+  console.log(categoryselected);
+
+  var margin = {top: 10, right: 30, bottom: 30, left: 60},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+  var svg = d3.select("col-md-12")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+    "translate(" + margin.left + "," + margin.top + ")");
+
+  var newdata = data.filter(function(d) {return d.province_name === provinceselected})
+  console.log(newdata)
+
+  
+
 });
 
 
