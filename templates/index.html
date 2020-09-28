@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
     integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
     crossorigin=""/>
-
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- d3 JavaScript -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
   
@@ -49,11 +49,10 @@
     </div>
   </nav>
   <div id="map-container" class="row">
-    <div id="map" class="col-md-9"><p><b>(!)</b> Hover over a province or territory to display the data on the graph!</p><svg id="svg" width="100%" preserveAspectRatio="xMinYMin meet">
+    <div id="map" class="col-md-7"><p><b>(!)</b> Hover over a province or territory to display the data on the graph!</p><svg id="svg" width="100%" preserveAspectRatio="xMinYMin meet">
         <g id="mapGroup" transform="translate(0,0)"></g> </svg></div>
             
-            
-    <div class="col-md-3">
+    <div class="col-md-5" id = "pleasework" width="100%" height = 200px>
         <p id="textarea" style="font-size:17px;">The number of <span class="txtType">total cases</span>
              
         <hr>

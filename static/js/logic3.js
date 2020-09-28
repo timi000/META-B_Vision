@@ -111,70 +111,105 @@ myMap.on('popupopen', function (e) {
   console.log(splitselection)
   var provinceselected = splitselection[2];
   var categoryselected = splitselection[8];
-  console.log(provinceselected);
-  console.log(categoryselected);
+  // console.log(provinceselected);
+  // console.log(categoryselected);
 
   var newdata = data.filter(function(d) {return d.province_name === provinceselected});
-  console.log(newdata);
+  console.log(newdata)
+  console.log(provinceselected);
+  console.log(categoryselected)
 
-  // Generating Chart 
-  var svgWidth = 5000;
-  var svgHeight = 5000;
+  // var dictionary = {
+  //   "Active Cases": active_cases,
+  //   "Daily New Cases": daily_cases,
+  //   "Daily Deaths": daily_deaths,
+  //   "Daily Tests" : daily_tests,
+  //   "Total Recovered" : total_recoverd,
+  //   "Total Recovered Today" : total_recovered_today
+// };
 
-  var margin = {
-    top: 50,
-    right: 50,
-    bottom: 50,
-    left: 50
+
+  var trace1 = {
+    x: newdata.map(d => d.date),
+    y: newdata.map(d => d.active_cases),
+    type: "scatter"
   };
+  console.log(newdata.map(d => d.date))
+  console.log(newdata.map(d => d.active_cases))
 
-  var chartWidth = svgWidth - margin.left - margin.right;
-  var chartHeight = svgHeight - margin.top - margin.bottom;
 
-  var svg = d3.select("#trendData")
-  .append("svg")
-  .attr("width", svgWidth)
-  .attr("height", svgHeight);
+  var dataprovince = [trace1];
+  var layout = {
+    title:  `${provinceselected} ${categoryselected}`,
+    height: 500,
+    xaxis:{
+      ticks: {
+        maxRotation:90}},
+    yaxis:{
+      title:`${categoryselected}`}
+    
+  };
+  Plotly.newPlot("pleasework", dataprovince, layout);
 
-  var chartGroup = svg.append("g")
-  .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  var parseTime = d3.timeParse("%d-%B-%Y");
+  // // Generating Chart 
+  // var svgWidth = 500000;
+  // var svgHeight = 500000;
 
-  newdata.forEach(function(data) {
-    data.date = parseTime(data.date);
-    data.active_cases = +data.active_cases;
-  });
+  // var margin = {
+  //   top: 50,
+  //   right: 50,
+  //   bottom: 50,
+  //   left: 50
+  // };
 
-  var xTimeScale = d3.scaleTime()
-    .domain(d3.extent(newdata, data => data.date))
-    .range([0, chartWidth]);
+  // var chartWidth = svgWidth - margin.left - margin.right;
+  // var chartHeight = svgHeight - margin.top - margin.bottom;
 
-  var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(newdata, data => data.active_cases)])
-    .range([chartHeight, 0])
+  // var svg = d3.select(".col-md-3")
+  // .append("svg")
+  // .attr("width", svgWidth)
+  // .attr("height", svgHeight);
+
+  // var chartGroup = svg.append("g")
+  // .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+  // //var parseTime = d3.timeParse("%d-%B-%Y");
+
+  // newdata.forEach(function(data) {
+  //   //data.date = parseTime(data.date);
+  //   data.active_cases = +data.active_cases;
+  // });
+
+  // var xTimeScale = d3.scaleTime()
+  //   .domain(d3.extent(newdata, data => data.date))
+  //   .range([0, chartWidth]);
+
+  // var yLinearScale = d3.scaleLinear()
+  //   .domain([0, d3.max(newdata, data => data.active_cases)])
+  //   .range([chartHeight, 0])
   
-  var bottomAxis = d3.axisBottom(xTimeScale);
-  var leftAxis = d3.axisLeft(yLinearScale);
+  // var bottomAxis = d3.axisBottom(xTimeScale);
+  // var leftAxis = d3.axisLeft(yLinearScale);
 
-  var drawLine = d3.line()
-  .x(d => xTimeScale(data.date))
-  .y(d => yLinearScale(data.active_cases));
+  // var drawLine = d3.line()
+  // .x(d => xTimeScale(data.date))
+  // .y(d => yLinearScale(data.active_cases));
 
-  chartGroup.append("path")
-    .attr("d", drawLine(newdata))
-    .classed("line", false);
+  // chartGroup.append("path")
+  //   .attr("d", drawLine(newdata))
+  //   .classed("line", false);
 
-  chartGroup.append("g")
-    .classed("axis", false)
-    .call(leftAxis);
+  // chartGroup.append("g")
+  //   .classed("axis", false)
+  //   .call(leftAxis);
 
-    chartGroup.append("g")
-    .classed("axis", false)
-    .attr("transform", `translate(0, ${chartHeight})`)
-    .call(bottomAxis);
+  // chartGroup.append("g")
+  //   .classed("axis", false)
+  //   .attr("transform", `translate(0, ${chartHeight})`)
+  //   .call(bottomAxis);
 
-  });
+});
 
 
 
