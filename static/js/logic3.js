@@ -119,19 +119,22 @@ myMap.on('popupopen', function (e) {
   console.log(provinceselected);
   console.log(categoryselected)
 
-  // var dictionary = {
-  //   "Active Cases": active_cases,
-  //   "Daily New Cases": daily_cases,
-  //   "Daily Deaths": daily_deaths,
-  //   "Daily Tests" : daily_tests,
-  //   "Total Recovered" : total_recoverd,
-  //   "Total Recovered Today" : total_recovered_today
-// };
+   var dictionary = {
+     "Active Cases": "active_cases",
+     "Daily New Cases": "daily_cases",
+     "Daily Deaths": "daily_deaths",
+    "Daily Tests" : "daily_tests",
+     "Total Recovered" : "total_recoverd",
+     "Total Recovered Today" : "total_recovered_today"
+};
 
+var category = dictionary[categoryselected]
+
+console.log (category)
 
   var trace1 = {
     x: newdata.map(d => d.date),
-    y: newdata.map(d => d.active_cases),
+    y: newdata.map(d => d[category]),
     type: "scatter"
   };
   console.log(newdata.map(d => d.date))

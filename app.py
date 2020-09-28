@@ -12,7 +12,7 @@ from flask import Flask, jsonify, render_template, redirect
 #################################################
 # Database Setup
 #################################################
-engine = create_engine(f'postgresql+psycopg2://postgres:mnie2894@localhost:5432/covid_vision')
+engine = create_engine(f'postgresql+psycopg2://postgres:123@localhost:5432/covid_vision')
 
 
 # reflect an existing database into a new model
