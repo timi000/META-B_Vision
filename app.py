@@ -39,6 +39,10 @@ def index():
 @app.route("/trends")
 def trends():
     return render_template("trends.html")
+
+@app.route("/choropleth")
+def choropleth():
+    return render_template("choropleth.html")        
     
 @app.route("/api/v1.0/covid_trends")
 def trend():
