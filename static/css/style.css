@@ -24,13 +24,14 @@ body{
     text-decoration-color: blue;
 }
 p{
-   padding-top: 20px;
+   background-color: white;
+   padding-top: 5px;
    padding-left: 55px;
    padding-right: 50px; 
 }
 footer{
     position: absolute;
-    left: 40%;
+    left:1%;
     top:99%
 }
 .mainpage{
@@ -46,10 +47,10 @@ footer{
     -webkit-text-stroke: 1px black;
    color: black;
    text-shadow:
-       3px 3px 0 white,
-     -1px -1px 0 white,  
-      1px -1px 0 white,
-      -1px 1px 0 white,
+       3px 3px 1 white,
+     -1px -1px 1 white,  
+      1px -1px 1 white,
+      -1px 1px 1 white,
        
 };
 footer{
