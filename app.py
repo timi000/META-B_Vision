@@ -1,35 +1,36 @@
-import numpy as np
-
+from models import create_classes
+import os
+from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func, inspect
-import datetime as dt 
+from flask import (
+    Flask,
+    render_template,
+    jsonify,
+    request,
+    redirect)
 
-from flask import Flask, jsonify, render_template, redirect
 
 
 #################################################
 # Database Setup
 #################################################
-engine = create_engine(f'postgresql+psycopg2://postgres:{123}@localhost:5432/covid_vision')
-
-
-# reflect an existing database into a new model
-Base = automap_base()
-# reflect the tables
-Base.prepare(engine, reflect=True)
-
-# Save reference to the table
-#Employee=Base.classes.employees
-Trends=Base.classes.covid_trends
-Covid=Base.classes.canada_covid
 
 
 #################################################
 # Flask Setup
 #################################################
 app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///Covid_Vision.sqlite"
+engine =app.config['SQLALCHEMY_DATABASE_URI'] 
+# Remove tracking modifications
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+Covid_Vision = create_classes(db)
 
 
 @app.route("/")
@@ -46,12 +47,11 @@ def choropleth():
     
 @app.route("/api/v1.0/covid_trends")
 def trend():
-    session = Session(engine)
-   
-    Result=session.query(Trends.date,Trends.Mask, Trends.CERB, Trends.Patio, Trends.Zoom,
-    Trends.Bike, Trends.numconf, Trends.numtestedtoday,
-    Trends.numtoday, Trends.numdeathstoday, Trends.numactive)
-    session.close()
+    Result=db.session.query( Covid_Vision[0].date, Covid_Vision[0].Mask,Covid_Vision[0].CERB, Covid_Vision[0].Patio,
+    Covid_Vision[0].Zoom, Covid_Vision[0].Bike, Covid_Vision[0].numconf, Covid_Vision[0].numtestedtoday,
+    Covid_Vision[0].numtoday,Covid_Vision[0].numdeathstoday, Covid_Vision[0].numactive
+    )
+  
 
     trd_list=[]
     for date, Mask, Zoom, CERB, Patio, Bike, numconf, numtestedtoday, numtoday , numdeathstoday , numactive in Result: 
@@ -67,21 +67,21 @@ def trend():
         start_dict["daily_cases"]=numtoday
         start_dict["active_cases"]=numactive
         start_dict["daily_deaths"]=numdeathstoday
-
         trd_list.append(start_dict) 
  
     return jsonify(trd_list)
 
+ 
+   
+
 
 @app.route("/api/v1.0/canada_covid")
 def corona():
-    session = Session(engine)
-    
-    Result=session.query(Covid.date, Covid.prname,Covid.latitude, Covid.longitude, Covid.population, 
-    Covid.numrecover, Covid.numrecoveredtoday,
-    Covid.numconf, Covid.numtestedtoday,
-    Covid.numtoday, Covid.numdeathstoday, Covid.numactive)
-    session.close()
+    Result=Result=db.session.query(Covid_Vision[1].date, Covid_Vision[1].prname,Covid_Vision[1].latitude, Covid_Vision[1].longitude, Covid_Vision[1].population, 
+    Covid_Vision[1].numrecover, Covid_Vision[1].numrecoveredtoday,
+    Covid_Vision[1].numconf, Covid_Vision[1].numtestedtoday,
+    Covid_Vision[1].numtoday, Covid_Vision[1].numdeathstoday, Covid_Vision[1].numactive)
+   
 
    
     cvd_list=[]
